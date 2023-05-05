@@ -3,6 +3,10 @@
 include_once 'top.php';
 //memanggil dan memproses file bagian menu
 include_once 'menu.php';
+include_once 'koneksi.php';
+include_once 'models/Pelanggan.php';
+include_once 'models/Pesanan.php';
+include_once 'models/Kartu.php';
 
 ?>
 <div id="layoutSidenav_content">
