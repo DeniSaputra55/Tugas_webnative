@@ -26,8 +26,9 @@ $pelanggan = $model->Pelanggan();
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                                <!-- <i class="fas fa-table me-1"></i>
+                                DataTable Example -->
+                                <a href="index.php?url=pelanggan_form" class="btn btn-primary btn-sm">Tambah</a>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -36,12 +37,13 @@ $pelanggan = $model->Pelanggan();
                                             <th>No</th>
                                             <th>Kode</th>
                                             <th>Nama Pelanggan</th>
-                                            <th>Alamat</th>
                                             <th>Jenis kelamin</th>
                                             <th>Tempat Lahir</th>
                                             <th>Tanggal Lahir</th>
                                             <th>Email</th>
+                                            <th>Alamat</th>
                                             <th>Kartu Id</th>
+                                            <th>Action</th>
                                            
                                         </tr>
                                     </thead>
@@ -50,12 +52,13 @@ $pelanggan = $model->Pelanggan();
                                             <th>No</th>
                                             <th>Kode</th>
                                             <th>Nama Pelanggan</th>
-                                            <th>Alamat</th>
                                             <th>Jenis kelamin</th>
                                             <th>Tempat Lahir</th>
                                             <th>Tanggal Lahir</th>
                                             <th>Email</th>
+                                            <th>Alamat</th>
                                             <th>Kartu Id</th>
+                                            <th>Action</th>
                                            
                                         </tr>
                                     </tfoot>
@@ -69,12 +72,21 @@ $pelanggan = $model->Pelanggan();
                                             <td><?= $no ?></td>
                                             <td><?= $row['kode']?></td>
                                             <td><?= $row['nama_pelanggan']?></td>
-                                            <td><?= $row['alamat']?></td>
                                             <td><?= $row['jk']?></td>
                                             <td><?= $row['tmp_lahir']?></td>
                                             <td><?= $row['tgl_lahir']?></td>
                                             <td><?= $row['email']?></td>
+                                            <td><?= $row['alamat']?></td>
                                             <td><?= $row['kartu_id']?></td>
+                                            <td>
+                                                <form action="pelanggan_controller.php" method="POST">
+                                                    <a class="btn btn-info btn-sm" href="index.php?url=pelanggan_detail&id=<?= $row ['id'] ?>">Detail</a>
+                                                    <a class="btn btn-warning btn-sm">Ubah</a>
+                                                    <a class="btn btn-danger btn-sm">Hapus</a>
+
+                                                    <input type="hidden" name="idx" value="<?= $row ['id'] ?>">
+                                                </form>
+                                            </td>
                                             
                                         </tr>
                                         <?php

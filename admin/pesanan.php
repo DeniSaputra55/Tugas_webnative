@@ -26,8 +26,9 @@ $pesanan = $model->Pesanan();
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                                <!-- <i class="fas fa-table me-1"></i>
+                                DataTable Example -->
+                                <a href="index.php?url=pesanan_form" class="btn btn-primary btn-sm">Tambah</a>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -37,6 +38,7 @@ $pesanan = $model->Pesanan();
                                             <th>Tanggal</th>
                                             <th>Total</th>
                                             <th>Pelanggan Id</th>
+                                            <th>Action</th>
                                            
                                         </tr>
                                     </thead>
@@ -46,6 +48,7 @@ $pesanan = $model->Pesanan();
                                             <th>Tanggal</th>
                                             <th>Total</th>
                                             <th>Pelanggan Id</th>
+                                            <th>Action</th>
                                            
                                         </tr>
                                     </tfoot>
@@ -60,6 +63,16 @@ $pesanan = $model->Pesanan();
                                             <td><?= $row['tanggal']?></td>
                                             <td><?= $row['total']?></td>
                                             <td><?= $row['pelanggan_id']?></td>
+
+                                            <td>
+                                                <form action="pesanan_controller.php" method="POST">
+                                                    <a class="btn btn-info btn-sm" href="index.php?url=pesanan_detail&id=<?= $row ['id'] ?>">Detail</a>
+                                                    <a class="btn btn-warning btn-sm">Ubah</a>
+                                                    <a class="btn btn-danger btn-sm">Hapus</a>
+
+                                                    <input type="hidden" name="idx" value="<?= $row ['id'] ?>">
+                                                </form>
+                                            </td>
                                             
                                         </tr>
                                         <?php
