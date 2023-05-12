@@ -1,14 +1,20 @@
 <?php 
+session_start();
 //memanggil dan memproses file bagian atas
 include_once 'top.php';
 //memanggil dan memproses file bagian menu
 include_once 'menu.php';
 include_once 'koneksi.php';
+include_once 'models/Produk.php';
+include_once 'models/Jenis_Produk.php';
 include_once 'models/Pelanggan.php';
 include_once 'models/Pesanan.php';
 include_once 'models/Kartu.php';
-include_once 'models/Produk.php';
-include_once 'models/Jenis_Produk.php';
+include_once 'models/Member.php';
+
+$sesi = $_SESSION['MEMBER'];
+if(isset($sesi)){
+
 ?>
 <div id="layoutSidenav_content">
     <main>
@@ -32,4 +38,8 @@ include_once 'models/Jenis_Produk.php';
 <?php
 //memanggil file bagian bawah
 include_once 'bottom.php';
+
+} else {
+    echo '<script> alert("Anda tidak boleh masuk");history.back();</script>';
+}
 ?>

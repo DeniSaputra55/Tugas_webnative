@@ -9,10 +9,14 @@ $data_produk = $model->dataProduk();
 // foreach ($data_produk as $row){
 //     print $row['kode'];
 // }
+
+$sesi =$_SESSION['MEMBER'];
+if(isset($sesi)){
+
+
 ?>
 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tables</h1>
+<h1 class="mt-4">Tables</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                             <li class="breadcrumb-item active">Tables</li>
@@ -28,8 +32,12 @@ $data_produk = $model->dataProduk();
                             <div class="card-header">
                                 <!-- <i class="fas fa-table me-1"></i>
                                 DataTable Example -->
-                                <!-- membuat tombol mengarahkan ke file produk_form.php -->
+                                <!-- Membuat tombol mengarahkan ke file produk_form.php -->
+                                <?php
+                                    if($sesi['role'] != 'staff'){
+                                ?>
                                 <a href="index.php?url=product_form" class="btn btn-primary btn-sm">Tambah</a>
+                                <?php } ?>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -41,8 +49,8 @@ $data_produk = $model->dataProduk();
                                             <th>Harga Beli</th>
                                             <th>Harga Jual</th>
                                             <th>Stok</th>
-                                            <th>Minimal Stok</th>
-                                            <th>Jenis Produk</th>
+                                            <th>Min Stok</th>
+                                            <th>Jenis Produk </th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -54,12 +62,14 @@ $data_produk = $model->dataProduk();
                                             <th>Harga Beli</th>
                                             <th>Harga Jual</th>
                                             <th>Stok</th>
-                                            <th>Minimal Stok</th>
-                                            <th>Jenis Produk</th>
+                                            <th>Min Stok</th>
+                                            <th>Jenis Produk </th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        <!-- hapus dari baris 64 sampai 511 -->
+                                        <!-- dari <tr> ke </tr> -->
                                         <?php
                                         $no = 1;
                                         foreach($data_produk as $row){
@@ -67,26 +77,34 @@ $data_produk = $model->dataProduk();
                                         ?>
                                         <tr>
                                             <td><?= $no ?></td>
-                                            <td><?=$row['kode']?></td>
-                                            <td><?=$row['nama']?></td>
-                                            <td><?=$row['harga_beli']?></td>
-                                            <td><?=$row['harga_jual']?></td>
-                                            <td><?=$row['stok']?></td>
-                                            <td><?=$row['min_stok']?></td>
-                                            <td><?=$row['jenis_produk_id']?></td>
+                                            <td><?= $row['kode']?></td>
+                                            <td><?= $row['nama']?></td>
+                                            <td><?= $row['harga_beli']?></td>
+                                            <td><?= $row['harga_jual']?></td>
+                                            <td><?= $row['stok']?></td>
+                                            <td><?= $row['min_stok']?></td>
+                                            <td><?= $row['jenis_produk_id']?></td>
                                             <td>
                                                 <form action="produk_controller.php" method="POST">
                                                     <a class="btn btn-info btn-sm" href="index.php?url=product_detail&id=<?= $row ['id'] ?>">Detail</a>
-                                                    <a class="btn btn-warning btn-sm">Ubah</a>
-                                                    <a class="btn btn-danger btn-sm">Hapus</a>
 
-                                                    <input type="hidden" name="idx" value="<?= $row['id']?>">
+                                                    <?php
+                                                        if($sesi['role'] == 'admin'){
+                                                    ?>
+
+                                                    <a class="btn btn-warning btn-sm" href="index.php?url=product_form&idedit=<?= $row ['id'] ?>">Ubah</a>
+                                                    <button class="btn btn-danger btn-sm" name="proses" value="hapus" 
+                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Hapus</button>
+
+                                                    <input type="hidden" name="idx" value="<?= $row ['id'] ?>">
+
+                                                    <?php } ?>
                                                 </form>
                                             </td>
                                         </tr>
-                                        <?php
-                                        $no++;
-                                        }
+                                      <?php
+                                        $no++; 
+                                    } 
                                         ?>
                                     </tbody>
                                 </table>
@@ -97,6 +115,9 @@ $data_produk = $model->dataProduk();
                 </div>
                 </div>
 <?php
+        } else {
+            echo '<script> alert("Anda tidak boleh masuk");history.back();</script>';
+        }
 //memanggil file bagian bawah
 // include_once 'bottom.php';
 ?>

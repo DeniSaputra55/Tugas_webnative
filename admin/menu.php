@@ -21,6 +21,7 @@
                                     <a class="nav-link" href="index.php?url=pelanggan">Data Pelanggan</a>
                                     <a class="nav-link" href="index.php?url=pesanan">Data Pesanan</a>
                                     <a class="nav-link" href="index.php?url=kartu">Data Kartu</a>
+                                    
                                     <a class="nav-link" href="index.php?url=about">Tentang</a>
                                     <a class="nav-link" href="index.php?url=contact">Kontak</a>
                                 </nav>

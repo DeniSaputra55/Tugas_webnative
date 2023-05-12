@@ -26,8 +26,8 @@ $psn = !empty($idedit) ? $obj_pesanan->getPesanan($idedit) : array();
         </div>
       </div>
       <div class="form-group row">
-        <div class="offset-4 col-8">
-        <?php
+      <div class="offset-4 col-8">
+          <?php
           if(empty($idedit)){
           ?>
           <button name="proses" type="submit" value="simpan" class="btn btn-primary">Submit</button>

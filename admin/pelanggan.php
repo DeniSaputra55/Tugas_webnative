@@ -9,10 +9,12 @@ $pelanggan = $model->Pelanggan();
 // foreach ($data_produk as $row){
 //     print $row['kode'];
 // }
+$sesi =$_SESSION['MEMBER'];
+if(isset($sesi)){
 ?>
 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tables</h1>
+                    <h1 class="mt-4">Tables</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                             <li class="breadcrumb-item active">Tables</li>
@@ -26,9 +28,11 @@ $pelanggan = $model->Pelanggan();
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <!-- <i class="fas fa-table me-1"></i>
-                                DataTable Example -->
+                            <?php
+                                    if($sesi['role'] != 'staff'){
+                                ?>
                                 <a href="index.php?url=pelanggan_form" class="btn btn-primary btn-sm">Tambah</a>
+                                <?php } ?>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -36,30 +40,26 @@ $pelanggan = $model->Pelanggan();
                                         <tr>
                                             <th>No</th>
                                             <th>Kode</th>
-                                            <th>Nama Pelanggan</th>
-                                            <th>Jenis kelamin</th>
+                                            <th>Nama</th>
+                                            <th>Jenis Kelamin</th>
                                             <th>Tempat Lahir</th>
                                             <th>Tanggal Lahir</th>
                                             <th>Email</th>
-                                            <th>Alamat</th>
-                                            <th>Kartu Id</th>
+                                            <th>Kartu</th>
                                             <th>Action</th>
-                                           
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>No</th>
                                             <th>Kode</th>
-                                            <th>Nama Pelanggan</th>
-                                            <th>Jenis kelamin</th>
+                                            <th>Nama</th>
+                                            <th>Jenis Kelamin</th>
                                             <th>Tempat Lahir</th>
                                             <th>Tanggal Lahir</th>
                                             <th>Email</th>
-                                            <th>Alamat</th>
-                                            <th>Kartu Id</th>
+                                            <th>Kartu</th>
                                             <th>Action</th>
-                                           
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -76,23 +76,28 @@ $pelanggan = $model->Pelanggan();
                                             <td><?= $row['tmp_lahir']?></td>
                                             <td><?= $row['tgl_lahir']?></td>
                                             <td><?= $row['email']?></td>
-                                            <td><?= $row['alamat']?></td>
                                             <td><?= $row['kartu_id']?></td>
                                             <td>
                                                 <form action="pelanggan_controller.php" method="POST">
                                                     <a class="btn btn-info btn-sm" href="index.php?url=pelanggan_detail&id=<?= $row ['id'] ?>">Detail</a>
-                                                    <a class="btn btn-warning btn-sm" href="index.php?url=pelanggan_form&idedit=<?= $row['id']?>">Ubah</a>
-                                                    <button type="submit" class="btn btn-danger btn-sm" name="proses" value="hapus"
-                                                    onclick="return confirm('Anda yakin akan dihapus?')">Hapus</button>
+
+                                                    <?php
+                                                        if($sesi['role'] == 'admin'){
+                                                    ?>
+
+                                                    <a class="btn btn-warning btn-sm" href="index.php?url=pelanggan_form&idedit=<?= $row ['id'] ?>">Ubah</a>
+                                                    <button class="btn btn-danger btn-sm" name="proses" value="hapus" 
+                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Hapus</button>
 
                                                     <input type="hidden" name="idx" value="<?= $row ['id'] ?>">
+
+                                                    <?php } ?>
                                                 </form>
                                             </td>
-                                            
                                         </tr>
-                                        <?php
-                                        $no++;
-                                        }
+                                      <?php
+                                        $no++; 
+                                    } 
                                         ?>
                                     </tbody>
                                 </table>
@@ -105,4 +110,7 @@ $pelanggan = $model->Pelanggan();
 <?php
 //memanggil file bagian bawah
 // include_once 'bottom.php';
+} else {
+    echo '<script> alert("Anda Tidak Bisa Masuk");history.back();</script>';
+}
 ?>

@@ -9,10 +9,13 @@ $jenis_produk = $model->JenisProduk();
 // foreach ($data_produk as $row){
 //     print $row['kode'];
 // }
+
+$sesi =$_SESSION['MEMBER'];
+if(isset($sesi)){
 ?>
 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tables</h1>
+                    <h1 class="mt-4">Tables</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                             <li class="breadcrumb-item active">Tables</li>
@@ -26,42 +29,56 @@ $jenis_produk = $model->JenisProduk();
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                            <?php
+                                    if($sesi['role'] != 'staff'){
+                                ?>
+                                <a href="index.php?url=jenis_produk_form" class="btn btn-primary btn-sm">Tambah</a>
+                                <?php } ?>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama</th>
+                                            <th>Jenis Produk </th>
                                             <th>Keterangan</th>
-                                           
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Keterangan</th>
-                                           
+                                            <th>Jenis Produk</th>
+                                            <th>Keterangan</th>   
+                                            <th>Action</th>   
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php
                                         $no = 1;
                                         foreach($jenis_produk as $row){
-
                                         ?>
                                         <tr>
                                             <td><?= $no ?></td>
-                                            <td><?=$row['nama']?></td>
-                                            <td><?=$row['ket']?></td>
-                                            
+                                            <td><?= $row['nama']?></td>
+                                            <td><?= $row['ket']?></td>
+                                            <td>
+                                                <form action="jenis_produk_controller.php" method="POST">
+                                                    <a class="btn btn-info btn-sm" href="index.php?url=jenis_produk_detail&id=<?= $row ['id'] ?>">Detail</a>
+                                                    <?php
+                                                        if($sesi['role'] == 'admin'){
+                                                    ?>
+                                                    <a class="btn btn-warning btn-sm" href="index.php?url=jenis_produk_form&idedit=<?= $row ['id'] ?>">Ubah</a>
+                                                    <button class="btn btn-danger btn-sm" name="proses" value="hapus" 
+                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Hapus</button>
+                                                    <input type="hidden" name="idx" value="<?= $row ['id'] ?>">
+                                                    <?php } ?>
+                                                </form>
+                                            </td>
                                         </tr>
-                                        <?php
-                                        $no++;
-                                        }
+                                      <?php
+                                        $no++; 
+                                    } 
                                         ?>
                                     </tbody>
                                 </table>
@@ -74,4 +91,7 @@ $jenis_produk = $model->JenisProduk();
 <?php
 //memanggil file bagian bawah
 // include_once 'bottom.php';
+} else {
+    echo '<script> alert("Anda Tidak Bisa Masuk");history.back();</script>';
+}
 ?>
